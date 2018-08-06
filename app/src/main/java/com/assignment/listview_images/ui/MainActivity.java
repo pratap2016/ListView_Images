@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.assignment.listview_images.MyApplication;
@@ -23,6 +24,8 @@ import com.assignment.listview_images.presenter.APICallBacks;
 import com.assignment.listview_images.presenter.ImageAdapter;
 import com.assignment.listview_images.utils.AppUtil;
 import com.assignment.listview_images.utils.Constants;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView = null;
     Toolbar toolbar = null;
     AppCompatTextView tv_Heading = null;
+    TextView tv_Refresh = null;
     /**
      * Read,write external storage and GPS permission
      */
@@ -53,14 +57,28 @@ public class MainActivity extends AppCompatActivity {
         initViews();
         setAdapterToView();
         loadDataFromServer();
+        viewOnClickListener();
+    }
+
+    private void viewOnClickListener() {
+        tv_Refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadDataFromServer();
+            }
+        });
     }
 
     private void initViews() {
         recyclerView = findViewById(R.id.recycler_view_main);
         toolbar = findViewById(R.id.toolbar_main);
         tv_Heading = findViewById(R.id.tv_tool_bar_title);
+        tv_Refresh = findViewById(R.id.tv_refresh);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
+
+
 
     private void setAdapterToView(){
 
