@@ -43,6 +43,9 @@ dependencies {
     api 'com.squareup.okhttp3:okhttp:3.7.0'
 
     // recyclerview
-    compile 'com.android.support:recyclerview-v7:27.1.1'
+    api 'com.android.support:recyclerview-v7:27.1.1'
+
+    // Multidex
+    api 'com.android.support:multidex:1.0.3'
 
 }
