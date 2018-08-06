@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by vijay on 06-08-2018.
+ * Model class for parsing row contents
  */
 
 public class RowModel {

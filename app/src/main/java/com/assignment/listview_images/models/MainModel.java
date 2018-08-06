@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Created by vijay on 06-08-2018.
+ * Model class for parsing the content of title and rows
  */
 
 public class MainModel {
