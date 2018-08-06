@@ -6,6 +6,17 @@ import android.support.multidex.MultiDex;
 
 import com.assignment.listview_images.utils.AppUtil;
 import com.assignment.listview_images.utils.Constants;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
+import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -20,6 +31,7 @@ public class MyApplication extends Application {
 
     private static MyApplication mInstance;
     private static Retrofit retrofit = null;
+    private static ImageLoader imageLoader = null;
 
     /**
      * Creating instance of the class
@@ -45,8 +57,10 @@ public class MyApplication extends Application {
 
     private void initClasses() {
         new AppUtil(mInstance);
-
+        // Apply configuration
+        ImageLoader.getInstance().init(MyApplication.getInstance().getImageLoadingConfiguration());
     }
+
 
     /**
      * Retrofit client creation
@@ -65,6 +79,37 @@ public class MyApplication extends Application {
                     .build();
         }
         return retrofit;
+    }
+
+    private DisplayImageOptions getDisplayOption(){
+        return new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .imageScaleType(ImageScaleType.EXACTLY)
+                .displayer(new FadeInBitmapDisplayer(300))
+                .resetViewBeforeLoading(true)
+                .showImageForEmptyUri(R.drawable.ic_image_480)
+                .showImageOnFail(R.drawable.ic_failed)
+                .showImageOnLoading(R.drawable.ic_loading).build();
+
+    }
+
+    private ImageLoaderConfiguration getImageLoadingConfiguration(){
+        return new ImageLoaderConfiguration.Builder(mInstance)
+                .defaultDisplayImageOptions(MyApplication.getInstance().getDisplayOption())
+                .memoryCacheExtraOptions(480, 800) // default = device screen dimensions
+                .diskCacheExtraOptions(480, 800, null)
+                .threadPoolSize(3) // default
+                .threadPriority(Thread.NORM_PRIORITY - 2) // default
+                .tasksProcessingOrder(QueueProcessingType.FIFO) // default
+                .denyCacheImageMultipleSizesInMemory()
+                .memoryCache(new LruMemoryCache(2 * 1024 * 1024))
+                .memoryCacheSize(2 * 1024 * 1024)
+                .memoryCacheSizePercentage(13) // default
+                .imageDownloader(new BaseImageDownloader(mInstance)) // default
+                .imageDecoder(new BaseImageDecoder(true)) // default
+                .defaultDisplayImageOptions(DisplayImageOptions.createSimple()) // default
+                .writeDebugLogs()
+                .build();
     }
 
 
