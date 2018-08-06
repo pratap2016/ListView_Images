@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ListView_Images</string>
+    <string name="str_google">https://www.google.com</string>
 </resources>
