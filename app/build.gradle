@@ -27,13 +27,22 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
 
+    // Rertofit
     api ('com.squareup.retrofit2:retrofit:2.1.0') {
         // exclude Retrofit’s OkHttp dependency module and define your own module import
         exclude module: 'okhttp'
     }
+    // Json Parsing
     api 'com.google.code.gson:gson:2.8.2'
     api 'com.squareup.retrofit2:converter-gson:2.1.0'
+
+    // OkHttp Logging Interceptor
     api 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+
+    // OkHttp module
     api 'com.squareup.okhttp3:okhttp:3.7.0'
+
+    // recyclerview
+    compile 'com.android.support:recyclerview-v7:27.1.1'
 
 }
