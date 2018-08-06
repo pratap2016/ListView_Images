@@ -10,6 +10,7 @@ import com.assignment.listview_images.utils.Constants;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -34,14 +35,6 @@ public class MyApplication extends Application {
     private static Retrofit retrofit = null;
     private static ImageLoader imageLoader = null;
 
-    /**
-     * Creating instance of the class
-     * @return
-     */
-    public static synchronized MyApplication getInstance() {
-        return mInstance;
-    }
-
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
@@ -56,8 +49,15 @@ public class MyApplication extends Application {
         initClasses();
     }
 
+    /**
+     * Creating instance of the class
+     * @return
+     */
+    public static synchronized MyApplication getInstance() {
+        return mInstance;
+    }
+
     private void initClasses() {
-        new AppUtil(mInstance);
         // Apply configuration
         ImageLoader.getInstance().init(MyApplication.getInstance().getImageLoadingConfiguration());
     }
@@ -94,9 +94,9 @@ public class MyApplication extends Application {
         return new DisplayImageOptions.Builder()
                 .cacheInMemory(true)
                 .imageScaleType(ImageScaleType.EXACTLY)
-                .displayer(new FadeInBitmapDisplayer(300))
-                .resetViewBeforeLoading(true)
-                .showImageForEmptyUri(R.drawable.ic_image_480)
+                .displayer(new FadeInBitmapDisplayer(150))
+                .resetViewBeforeLoading(false)
+                .showImageForEmptyUri(R.drawable.ic_failed)
                 .showImageOnFail(R.drawable.ic_failed)
                 .showImageOnLoading(R.drawable.ic_loading).build();
 
@@ -112,17 +112,15 @@ public class MyApplication extends Application {
                 .defaultDisplayImageOptions(MyApplication.getInstance().getDisplayOption())
                 .memoryCacheExtraOptions(480, 800) // default = device screen dimensions
                 .diskCacheExtraOptions(480, 800, null)
-                .threadPoolSize(3) // default
-                .threadPriority(Thread.NORM_PRIORITY - 2) // default
-                .tasksProcessingOrder(QueueProcessingType.FIFO) // default
-                .denyCacheImageMultipleSizesInMemory()
+                .threadPoolSize(10) // default
+                .threadPriority(Thread.NORM_PRIORITY) // default
+                .tasksProcessingOrder(QueueProcessingType.LIFO) // default
                 .memoryCache(new LruMemoryCache(2 * 1024 * 1024))
+                .memoryCache(new WeakMemoryCache())
                 .memoryCacheSize(2 * 1024 * 1024)
-                .memoryCacheSizePercentage(13) // default
+                .memoryCacheSizePercentage(80) // default
                 .imageDownloader(new BaseImageDownloader(mInstance)) // default
-                .imageDecoder(new BaseImageDecoder(true)) // default
                 .defaultDisplayImageOptions(DisplayImageOptions.createSimple()) // default
-                .writeDebugLogs()
                 .build();
     }
 

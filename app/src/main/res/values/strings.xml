@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">ListView_Images</string>
     <string name="str_google">https://www.google.com</string>
+    <string name="check_internet">No Internet. Try Again.</string>
+    <string name="loading_wait">Loading data. Please wait...</string>
+    <string name="error">Error</string>
 </resources>

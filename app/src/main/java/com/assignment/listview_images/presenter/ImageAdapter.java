@@ -1,6 +1,7 @@
 package com.assignment.listview_images.presenter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -10,9 +11,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.assignment.listview_images.MyApplication;
 import com.assignment.listview_images.R;
 import com.assignment.listview_images.models.RowModel;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.List;
 
@@ -47,8 +51,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         public void onClick(View view) {
             RowModel item = getItem(getAdapterPosition());
             this.mItemListener.onPostClick(item.getTitle());
-
-            notifyDataSetChanged();
         }
     }
 
@@ -66,18 +68,53 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
         View postView = inflater.inflate(R.layout.image_items, parent, false);
 
-        ViewHolder viewHolder = new ViewHolder(postView, this.mItemListener);
-        return viewHolder;
+        return new ViewHolder(postView, this.mItemListener);
     }
 
     @Override
-    public void onBindViewHolder(ImageAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final ImageAdapter.ViewHolder holder, int position) {
         RowModel item = mItems.get(position);
         ImageLoader imageLoader = ImageLoader.getInstance();
         holder.tv_heading.setText(item.getTitle());
-        holder.tv_Description.setText(item.getDescription());
+        if(null!= item.getDescription())
+            holder.tv_Description.setText(item.getDescription());
         //download and display image from url
-        imageLoader.displayImage((String) item.getImageHref(),  holder.iv_Pics);
+        imageLoader.displayImage((String) item.getImageHref(),  holder.iv_Pics, new ImageLoadingListener() {
+
+            @Override
+            public void onLoadingStarted(String imageUri, View view) {
+                holder.iv_Pics.setImageResource(R.drawable.ic_loading);
+            }
+
+            @Override
+            public void onLoadingFailed(String imageUri, View view,
+                                        FailReason failReason) {
+                // TODO Auto-generated method stub
+                // This will handle 404 and it will catch null exception
+                // do here what you want to do
+                holder.iv_Pics.setImageResource(R.drawable.ic_failed);
+            }
+
+            @Override
+            public void onLoadingComplete(String imageUri,
+                                          View view, Bitmap loadedImage) {
+                // TODO Auto-generated method stub
+                if (holder.iv_Pics == null)
+                    return;
+
+                if(null != loadedImage)
+                    holder.iv_Pics.setImageBitmap(loadedImage);
+                else
+                    holder.iv_Pics.setImageResource(R.drawable.ic_failed);
+            }
+
+            @Override
+            public void onLoadingCancelled(String imageUri,
+                                           View view) {
+                holder.iv_Pics.setImageResource(R.drawable.ic_failed);
+            }
+
+        });
     }
 
     @Override

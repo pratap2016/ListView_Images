@@ -1,7 +1,9 @@
 package com.assignment.listview_images.utils;
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -9,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 
 import com.assignment.listview_images.R;
+import com.assignment.listview_images.ui.MainActivity;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -22,20 +25,14 @@ public class AppUtil {
 
      static Context mContext;
 
-    /**
-     *  Application Util class parameterized constructor to initialize
-     *  required components to use the Util class
-     * @param context
-     */
-    public AppUtil(Context context) {
-        mContext = context;
-    }
 
     /**
      *  Checking if device is connected to internet or not
      * @return
+     * @param context
      */
-    public static boolean isInternetConnected() {
+    public static boolean isInternetConnected(Context context) {
+        mContext = context;
         ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(
                 Context.CONNECTIVITY_SERVICE);
 
@@ -103,5 +100,38 @@ public class AppUtil {
 
         }
 
+    }
+
+    /**
+     * Check if All Uses Permissions are granted by User or not
+     * If granted return true else return false
+     * @return
+     */
+    public static boolean verifyAllPermissions(int[] permissions) {
+        for (int result : permissions) {
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Check if external storage is available.
+     * If available return true else return false
+     * @return
+     */
+    public static boolean hasSelfPermission(Activity activity, String[] permissions) {
+
+        // Verify that all the permissions.
+        for (String permission : permissions) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if(null != activity)
+                    if (activity.checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
+                        return false;
+                    }
+            }
+        }
+        return true;
     }
 }
