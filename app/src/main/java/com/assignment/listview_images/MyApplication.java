@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.assignment.listview_images.presenter.APIInterface;
 import com.assignment.listview_images.utils.AppUtil;
 import com.assignment.listview_images.utils.Constants;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -81,6 +82,14 @@ public class MyApplication extends Application {
         return retrofit;
     }
 
+    public static APIInterface getRetrofitService(){
+        return getClient().create(APIInterface.class);
+    }
+
+    /**
+     * UIL Display Option
+     * @return
+     */
     private DisplayImageOptions getDisplayOption(){
         return new DisplayImageOptions.Builder()
                 .cacheInMemory(true)
@@ -93,6 +102,11 @@ public class MyApplication extends Application {
 
     }
 
+
+    /**
+     * UIL Image loading configuration
+     * @return
+     */
     private ImageLoaderConfiguration getImageLoadingConfiguration(){
         return new ImageLoaderConfiguration.Builder(mInstance)
                 .defaultDisplayImageOptions(MyApplication.getInstance().getDisplayOption())
