@@ -1,7 +1,9 @@
-package com.assignment.listview_images;
+package com.assignment.listview_images.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.assignment.listview_images.R;
 
 public class MainActivity extends AppCompatActivity {
 
