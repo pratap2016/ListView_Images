@@ -10,7 +10,7 @@ import retrofit2.http.GET;
  * Retrofit API Interface
  */
 
-interface APIInterface {
+public interface APIInterface {
 
     @GET(Constants.Url.DATA_URL)
     Call<MainModel> getJsonFromUrl();
