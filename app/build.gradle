@@ -48,4 +48,7 @@ dependencies {
     // Multidex
     api 'com.android.support:multidex:1.0.3'
 
+    // UIL
+    api 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
 }
