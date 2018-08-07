@@ -152,7 +152,10 @@ public class MainActivity extends AppCompatActivity {
                 public void onResponse(Call<MainModel> call, Response<MainModel> response) {
                     dialog.dismiss();
 
+                    // Success response
                     if (response.isSuccessful()) {
+
+                        // If Response is not empty or null
                         if(null != response.body()) {
                             if (null != response.body().getTitle())
                                 tv_Heading.setText(response.body().getTitle());
@@ -184,6 +187,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Show error screen if API call fails
+     */
     private void showErrorMessage(){
         findViewById(R.id.ll_main).setVisibility(View.GONE);
         findViewById(R.id.ll_error).setVisibility(View.VISIBLE);

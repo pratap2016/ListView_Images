@@ -29,6 +29,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     private List<RowModel> mItems;
     private PostItemListener mItemListener;
 
+    /**
+     * View holder to hold all views
+     */
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         AppCompatTextView tv_heading;
@@ -38,7 +41,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         // We'll use this field to showcase matching the holder from the test.
         private boolean mIsInTheMiddle = false;
 
-        public ViewHolder(View itemView, PostItemListener postItemListener) {
+        ViewHolder(View itemView, PostItemListener postItemListener) {
             super(itemView);
             tv_heading = itemView.findViewById(R.id.text_view_heading);
             tv_Description = itemView.findViewById(R.id.tv_description);
@@ -63,6 +66,11 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         }
     }
 
+    /**
+     * Constructor to pass value to adapter
+     * @param posts
+     * @param itemListener
+     */
     public ImageAdapter(List<RowModel> posts, PostItemListener itemListener) {
         mItems = posts;
         mItemListener = itemListener;
@@ -130,6 +138,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         return mItems.size();
     }
 
+    /**
+     * Method to update Adapter
+     * @param items
+     */
     public void updateAnswers(List<RowModel> items) {
         mItems = items;
         notifyDataSetChanged();
@@ -139,6 +151,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         return mItems.get(adapterPosition);
     }
 
+    /**
+     * Interface to give callback on item clicked
+     */
     public interface PostItemListener {
         void onPostClick(String str);
     }

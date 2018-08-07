@@ -20,6 +20,7 @@ public class APICallBacks {
 
     }
 
+    // Creating instance of Wrapper class
     public static synchronized APICallBacks getInstance(){
         if(null == mInstance) {
             mInstance = new APICallBacks();
