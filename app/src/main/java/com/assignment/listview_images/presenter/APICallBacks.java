@@ -8,7 +8,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Created by vijay on 06-08-2018.
+ * Wrapper class to hold all API calls
  */
 
 public class APICallBacks {
@@ -27,23 +27,30 @@ public class APICallBacks {
         return mInstance;
     }
 
+    // Interface to give call back and data to implementing class
     public interface GetResult{
 
         void onResponse(Call<MainModel> call, Response<MainModel> response);
         void onFailure(Call<MainModel> call, Throwable t);
     }
 
+    /**
+     * Retrofit API call
+     * @param result
+     */
     public void apiCallToGetData(GetResult result){
         getResult  = result;
         MyApplication.getRetrofitService().getJsonFromUrl().enqueue(new Callback<MainModel>() {
             @Override
             public void onResponse(Call<MainModel> call, Response<MainModel> response) {
+                // Passing data on success
                 getResult.onResponse(call, response);
 
             }
 
             @Override
             public void onFailure(Call<MainModel> call, Throwable t) {
+                // Passing data on failure
                 getResult.onFailure(call, t);
 
             }

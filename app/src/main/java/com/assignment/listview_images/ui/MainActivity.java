@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     AppCompatTextView tv_Heading = null;
     TextView tv_Refresh = null;
     /**
-     * Read,write external storage and GPS permission
+     * Phone state permission
      */
     public static String PERMISSIONS[] = new String[]{Manifest.permission.READ_PHONE_STATE};
 
@@ -53,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Initializing all UI components
+     */
     private void ui() {
         initViews();
         setAdapterToView();
@@ -60,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
         viewOnClickListener();
     }
 
+    /**
+     * UI Click listeners
+     */
     private void viewOnClickListener() {
         tv_Refresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,19 +75,28 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Initializing all views
+     */
     private void initViews() {
         recyclerView = findViewById(R.id.recycler_view_main);
         toolbar = findViewById(R.id.toolbar_main);
         tv_Heading = findViewById(R.id.tv_tool_bar_title);
         tv_Refresh = findViewById(R.id.tv_refresh);
+
+        // Setting Toolbar to action bar
         setSupportActionBar(toolbar);
+
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
 
-
+    /**
+     * Setting values to Adapter
+     */
     private void setAdapterToView(){
 
+        // Creating new instance of Image adapter and setting values to it
         imageAdapter = new ImageAdapter(new ArrayList<RowModel>(0), new ImageAdapter.PostItemListener() {
 
             @Override
@@ -91,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Recycler view Layout manager and Decorator
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(imageAdapter);
@@ -116,15 +132,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method to check internet and Make api call to get feeds
+     */
     private void loadDataFromServer() {
 
-        if(AppUtil.isInternetConnected(this)) {
+        if(AppUtil.isInternetConnected(this)) { // Checking internet connection
+
+            // Creating progress dialog to show for async call
             final ProgressDialog dialog = new ProgressDialog(this);
             dialog.setCancelable(false);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setMessage(getResources().getString(R.string.loading_wait));
             dialog.show();
 
+            // Wrapper class callback to get result
             APICallBacks.getInstance().apiCallToGetData(new APICallBacks.GetResult() {
                 @Override
                 public void onResponse(Call<MainModel> call, Response<MainModel> response) {
