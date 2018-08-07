@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setAdapterToView(){
 
-        imageAdapter = new ImageAdapter(this, new ArrayList<RowModel>(0), new ImageAdapter.PostItemListener() {
+        imageAdapter = new ImageAdapter(new ArrayList<RowModel>(0), new ImageAdapter.PostItemListener() {
 
             @Override
             public void onPostClick(String str) {
