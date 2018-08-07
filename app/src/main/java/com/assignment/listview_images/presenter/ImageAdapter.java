@@ -27,7 +27,6 @@ import java.util.List;
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
 
     private List<RowModel> mItems;
-    private Context mContext;
     private PostItemListener mItemListener;
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -36,6 +35,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         AppCompatTextView tv_Description;
         ImageView iv_Pics;
         PostItemListener mItemListener;
+        // We'll use this field to showcase matching the holder from the test.
+        private boolean mIsInTheMiddle = false;
 
         public ViewHolder(View itemView, PostItemListener postItemListener) {
             super(itemView);
@@ -52,11 +53,18 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             RowModel item = getItem(getAdapterPosition());
             this.mItemListener.onPostClick(item.getTitle());
         }
+
+        public boolean getIsInTheMiddle() {
+            return mIsInTheMiddle;
+        }
+
+        void setIsInTheMiddle(boolean isInTheMiddle) {
+            mIsInTheMiddle = isInTheMiddle;
+        }
     }
 
-    public ImageAdapter(Context context, List<RowModel> posts, PostItemListener itemListener) {
+    public ImageAdapter(List<RowModel> posts, PostItemListener itemListener) {
         mItems = posts;
-        mContext = context;
         mItemListener = itemListener;
     }
 
