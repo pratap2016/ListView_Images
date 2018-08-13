@@ -9,9 +9,11 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.WindowManager;
 
 import com.assignment.listview_images.R;
-import com.assignment.listview_images.ui.MainActivity;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -133,5 +135,75 @@ public class AppUtil {
             }
         }
         return true;
+    }
+
+    /**
+     * Getting device screen resolution for Image caching
+     * @param context
+     * @return
+     */
+    public static int getScreenResolutionWidth(Context context)
+    {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
+        display.getMetrics(metrics);
+        int width = metrics.widthPixels;
+
+        return width ;
+    }
+
+    /**
+     * Getting device screen resolution for Image caching
+     * @param context
+     * @return
+     */
+    public static int getScreenResolutionHeight(Context context)
+    {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
+        display.getMetrics(metrics);
+        int height = metrics.heightPixels;
+
+        return  height ;
+    }
+
+    /**
+     * Getting screen density of device
+     * @param mContext
+     * @return
+     */
+    public static String getScreenDensity(Context mContext){
+        int density= mContext.getResources().getDisplayMetrics().densityDpi;
+        String screenDensity = null;
+        switch(density)
+        {
+            case DisplayMetrics.DENSITY_LOW:
+                screenDensity = mContext.getResources().getString(R.string.ldpi);
+
+                break;
+            case DisplayMetrics.DENSITY_MEDIUM:
+                screenDensity = mContext.getResources().getString(R.string.mdpi);
+
+                break;
+            case DisplayMetrics.DENSITY_HIGH:
+                screenDensity = mContext.getResources().getString(R.string.hdpi);
+
+                break;
+            case DisplayMetrics.DENSITY_XHIGH:
+                screenDensity = mContext.getResources().getString(R.string.xhdpi);
+
+                break;
+            case DisplayMetrics.DENSITY_XXHIGH:
+                screenDensity = mContext.getResources().getString(R.string.xxhdpi);
+
+                break;
+            case DisplayMetrics.DENSITY_XXXHIGH:
+                screenDensity = mContext.getResources().getString(R.string.xxxhdpi);
+
+                break;
+        }
+        return screenDensity;
     }
 }
