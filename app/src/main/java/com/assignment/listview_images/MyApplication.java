@@ -110,8 +110,8 @@ public class MyApplication extends Application {
     private ImageLoaderConfiguration getImageLoadingConfiguration(){
         return new ImageLoaderConfiguration.Builder(mInstance)
                 .defaultDisplayImageOptions(MyApplication.getInstance().getDisplayOption())
-                .memoryCacheExtraOptions(480, 800) // default = device screen dimensions
-                .diskCacheExtraOptions(480, 800, null)
+                .memoryCacheExtraOptions(AppUtil.getScreenResolutionWidth(mInstance), AppUtil.getScreenResolutionHeight(mInstance)) // default = device screen dimensions
+                .diskCacheExtraOptions(AppUtil.getScreenResolutionWidth(mInstance), AppUtil.getScreenResolutionHeight(mInstance), null)
                 .threadPoolSize(10) // default
                 .threadPriority(Thread.NORM_PRIORITY) // default
                 .tasksProcessingOrder(QueueProcessingType.LIFO) // default
