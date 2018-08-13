@@ -1,17 +1,14 @@
-package com.assignment.listview_images.presenter;
+package com.assignment.listview_images.ui;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.assignment.listview_images.MyApplication;
 import com.assignment.listview_images.R;
 import com.assignment.listview_images.models.RowModel;
 import com.nostra13.universalimageloader.core.ImageLoader;
