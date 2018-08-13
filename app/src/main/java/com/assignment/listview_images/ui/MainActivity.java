@@ -21,11 +21,8 @@ import com.assignment.listview_images.R;
 import com.assignment.listview_images.models.MainModel;
 import com.assignment.listview_images.models.RowModel;
 import com.assignment.listview_images.presenter.APICallBacks;
-import com.assignment.listview_images.presenter.ImageAdapter;
 import com.assignment.listview_images.utils.AppUtil;
 import com.assignment.listview_images.utils.Constants;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
