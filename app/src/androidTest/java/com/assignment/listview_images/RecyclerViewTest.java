@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import com.assignment.listview_images.presenter.ImageAdapter;
+import com.assignment.listview_images.ui.ImageAdapter;
 import com.assignment.listview_images.ui.MainActivity;
 
 import org.hamcrest.Description;
@@ -83,7 +83,7 @@ public class RecyclerViewTest {
     }
 
     /**
-     * Matches the {@link com.assignment.listview_images.presenter.ImageAdapter.ViewHolder}s in the middle of the list.
+     * Matches the {@link ImageAdapter.ViewHolder}s in the middle of the list.
      */
     private static Matcher<ImageAdapter.ViewHolder> isInTheMiddle() {
         return new TypeSafeMatcher<ImageAdapter.ViewHolder>() {
