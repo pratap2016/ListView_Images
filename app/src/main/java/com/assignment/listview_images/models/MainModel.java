@@ -11,6 +11,8 @@ import java.util.List;
  */
 
 public class MainModel implements Serializable{
+    static final long serialVersionUID = 10042L;
+
     @SerializedName("title")
     @Expose
     private String title;

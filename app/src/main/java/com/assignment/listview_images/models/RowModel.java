@@ -10,6 +10,7 @@ import java.io.Serializable;
  */
 
 public class RowModel implements Serializable{
+    static final long serialVersionUID = 10043L;
     @SerializedName("title")
     @Expose
     private String title;
