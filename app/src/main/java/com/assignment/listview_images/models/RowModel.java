@@ -3,11 +3,13 @@ package com.assignment.listview_images.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
- * Model class for parsing row contents
+ * Model class for parsing row contents which implements serializable
  */
 
-public class RowModel {
+public class RowModel implements Serializable{
     @SerializedName("title")
     @Expose
     private String title;
