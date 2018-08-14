@@ -17,6 +17,9 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Image display Adapter class
  */
@@ -31,18 +34,20 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
      */
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        AppCompatTextView tv_heading;
-        AppCompatTextView tv_Description;
-        ImageView iv_Pics;
+        // Butter Knife Dependency Injection
+        @BindView(R.id.text_view_heading) AppCompatTextView tv_heading;
+        @BindView(R.id.tv_description) AppCompatTextView tv_Description;
+        @BindView(R.id.iv_animal) ImageView iv_Pics;
+
         PostItemListener mItemListener;
         // We'll use this field to showcase matching the holder from the test.
         private boolean mIsInTheMiddle = false;
 
         ViewHolder(View itemView, PostItemListener postItemListener) {
             super(itemView);
-            tv_heading = itemView.findViewById(R.id.text_view_heading);
-            tv_Description = itemView.findViewById(R.id.tv_description);
-            iv_Pics = itemView.findViewById(R.id.iv_animal);
+
+            // Butter Knife initialization for dependency injection
+            ButterKnife.bind(this, itemView);
 
             this.mItemListener = postItemListener;
             itemView.setOnClickListener(this);
@@ -102,7 +107,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             @Override
             public void onLoadingFailed(String imageUri, View view,
                                         FailReason failReason) {
-                // TODO Auto-generated method stub
                 // This will handle 404 and it will catch null exception
                 // do here what you want to do
                 holder.iv_Pics.setImageResource(R.drawable.ic_failed);
@@ -111,7 +115,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             @Override
             public void onLoadingComplete(String imageUri,
                                           View view, Bitmap loadedImage) {
-                // TODO Auto-generated method stub
                 if (holder.iv_Pics == null)
                     return;
 
