@@ -2,17 +2,11 @@ package com.assignment.listview_images.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.Toolbar;
 
 import com.assignment.listview_images.R;
 
-import butterknife.BindView;
-
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.toolbar_main) Toolbar toolbar;
-    @BindView(R.id.tv_tool_bar_title) AppCompatTextView tv_Heading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +29,6 @@ public class MainActivity extends AppCompatActivity {
      * Initializing all views
      */
     private void initViews() {
-        // Setting Toolbar to action bar
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
         addOrReplaceFragment(R.id.fragment_main, new MainFragment(), MainFragment.class.getName());
     }
 
