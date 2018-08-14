@@ -31,6 +31,7 @@ import com.assignment.listview_images.utils.Constants;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -74,6 +75,8 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         if(null == mView)
             mView = inflater.inflate(R.layout.fragment_main,container, false);
 
+        ButterKnife.bind(this, mView);
+
         ui();
 
         return mView;
@@ -95,9 +98,11 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         // Setting Toolbar to action bar
         MainActivity activity = (MainActivity) getActivity();
+        if(null != activity.getSupportActionBar())
+            activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
         activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        mSwipeRefreshLayout.setRefreshing(false);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
                 android.R.color.holo_green_dark,
@@ -107,7 +112,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         /**
          * Showing Swipe Refresh animation on activity create
          * As animation won't start on onCreate, post runnable is used
-         */
+         *//*
         mSwipeRefreshLayout.post(new Runnable() {
 
             @Override
@@ -118,7 +123,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 // Fetching data from server
                 loadDataFromServer();
             }
-        });
+        });*/
     }
 
     /**
@@ -181,7 +186,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             APICallBacks.getInstance().apiCallToGetData(new APICallBacks.GetResult() {
                 @Override
                 public void onResponse(Call<MainModel> call, Response<MainModel> response) {
-                    if(!mSwipeRefreshLayout.isRefreshing())
+                    if (!mSwipeRefreshLayout.isRefreshing())
                         dialog.dismiss();
                     else
                         // Stopping swipe refresh
@@ -212,7 +217,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 @Override
                 public void onFailure(Call<MainModel> call, Throwable t) {
                     showErrorMessage();
-                    if(!mSwipeRefreshLayout.isRefreshing())
+                    if (!mSwipeRefreshLayout.isRefreshing())
                         dialog.dismiss();
                     else
                     // Stopping swipe refresh
@@ -223,6 +228,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             });
         }
         else{
+            mSwipeRefreshLayout.setRefreshing(false);
             Toast.makeText(MyApplication.getInstance(),getResources().getString(R.string.check_internet), Toast.LENGTH_SHORT).show();
         }
     }
