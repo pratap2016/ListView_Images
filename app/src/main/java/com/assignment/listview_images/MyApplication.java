@@ -7,8 +7,6 @@ import android.support.multidex.MultiDex;
 import com.assignment.listview_images.presenter.APIInterface;
 import com.assignment.listview_images.utils.AppUtil;
 import com.assignment.listview_images.utils.Constants;
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
-import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -16,7 +14,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 
@@ -33,7 +30,6 @@ public class MyApplication extends Application {
 
     private static MyApplication mInstance;
     private static Retrofit retrofit = null;
-    private static ImageLoader imageLoader = null;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -110,8 +106,10 @@ public class MyApplication extends Application {
     private ImageLoaderConfiguration getImageLoadingConfiguration(){
         return new ImageLoaderConfiguration.Builder(mInstance)
                 .defaultDisplayImageOptions(MyApplication.getInstance().getDisplayOption())
-                .memoryCacheExtraOptions(AppUtil.getScreenResolutionWidth(mInstance), AppUtil.getScreenResolutionHeight(mInstance)) // default = device screen dimensions
-                .diskCacheExtraOptions(AppUtil.getScreenResolutionWidth(mInstance), AppUtil.getScreenResolutionHeight(mInstance), null)
+                .memoryCacheExtraOptions(AppUtil.getScreenResolutionWidth(mInstance),
+                        AppUtil.getScreenResolutionHeight(mInstance)) // default = device screen dimensions
+                .diskCacheExtraOptions(AppUtil.getScreenResolutionWidth(mInstance),
+                        AppUtil.getScreenResolutionHeight(mInstance), null)
                 .threadPoolSize(10) // default
                 .threadPriority(Thread.NORM_PRIORITY) // default
                 .tasksProcessingOrder(QueueProcessingType.LIFO) // default
