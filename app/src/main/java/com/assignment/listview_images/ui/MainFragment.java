@@ -40,6 +40,7 @@ import retrofit2.Response;
 
 public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
+
     /**
      * Phone state permission
      */
