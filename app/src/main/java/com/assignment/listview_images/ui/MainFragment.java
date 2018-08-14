@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.assignment.listview_images.MyApplication;
@@ -55,12 +54,12 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     LinearLayout llMain;
     @BindView(R.id.ll_error)
     LinearLayout llError;
+    @BindView(R.id.tv_tool_bar_title)
+    AppCompatTextView tv_Heading;
 
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-    AppCompatTextView tv_Heading = null;
-    TextView tv_Refresh = null;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +84,12 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     private void initViews() {
+
+        // Setting Toolbar to action bar
+        MainActivity activity = (MainActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+        activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
                 android.R.color.holo_green_dark,
@@ -161,13 +166,18 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             dialog.setCancelable(false);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setMessage(getResources().getString(R.string.loading_wait));
-            dialog.show();
+            if(!mSwipeRefreshLayout.isRefreshing())
+                dialog.show();
 
             // Wrapper class callback to get result
             APICallBacks.getInstance().apiCallToGetData(new APICallBacks.GetResult() {
                 @Override
                 public void onResponse(Call<MainModel> call, Response<MainModel> response) {
-                    dialog.dismiss();
+                    if(!mSwipeRefreshLayout.isRefreshing())
+                        dialog.dismiss();
+                    else
+                        // Stopping swipe refresh
+                        mSwipeRefreshLayout.setRefreshing(false);
 
                     // Success response
                     if (response.isSuccessful()) {
@@ -194,7 +204,12 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 @Override
                 public void onFailure(Call<MainModel> call, Throwable t) {
                     showErrorMessage();
-                    dialog.dismiss();
+                    if(!mSwipeRefreshLayout.isRefreshing())
+                        dialog.dismiss();
+                    else
+                    // Stopping swipe refresh
+                    mSwipeRefreshLayout.setRefreshing(false);
+
                     Log.d("MainActivity", "error loading from API");
                 }
             });
@@ -223,8 +238,5 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         // Showing refresh animation before making http call
         mSwipeRefreshLayout.setRefreshing(true);
         getPermissions();
-
-        // Stopping swipe refresh
-        mSwipeRefreshLayout.setRefreshing(false);
     }
 }
