@@ -47,14 +47,10 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <include
-        android:id="@+id/ll_main"
-        layout="@layout/containtmain"
-        android:visibility="visible" />
-
-    <include
-        android:id="@+id/ll_error"
-        layout="@layout/error"
-        android:visibility="gone" />
+    <FrameLayout
+        android:id="@+id/fragment_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white" />
 
 </android.support.v7.widget.LinearLayoutCompat>
