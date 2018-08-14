@@ -65,4 +65,8 @@ dependencies {
     // UIL
     api 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 
+    //Butter knife for dependency injection
+    compile 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
 }
