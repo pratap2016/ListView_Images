@@ -46,6 +46,8 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public static String PERMISSIONS[] = new String[]{Manifest.permission.READ_PHONE_STATE};
     View mView;
     ImageAdapter imageAdapter = null;
+
+    // Butter Knife dependency injection
     @BindView(R.id.toolbar_main)
     Toolbar toolbar;
     @BindView(R.id.recycler_view_main)
@@ -56,7 +58,6 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     LinearLayout llError;
     @BindView(R.id.tv_tool_bar_title)
     AppCompatTextView tv_Heading;
-
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -77,12 +78,18 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         return mView;
     }
 
+    /**
+     * All Ui related operation of Fragment
+     */
     private void ui() {
         initViews();
         setAdapterToView();
         getPermissions();
     }
 
+    /**
+     * Initializing all views and operations
+     */
     private void initViews() {
 
         // Setting Toolbar to action bar
@@ -233,6 +240,9 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         loadRecyclerViewData();
     }
 
+    /**
+     * Reloading the recycler view after api call.
+     */
     private void loadRecyclerViewData() {
 
         // Showing refresh animation before making http call
