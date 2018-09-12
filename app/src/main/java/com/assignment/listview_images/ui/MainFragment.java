@@ -156,11 +156,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private void getPermissions(){
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (AppUtil.hasSelfPermission(getActivity(), PERMISSIONS)) {
-                loadDataFromServer();
-            } else {
-                requestPermissions(PERMISSIONS, Constants.PermissionConatants.REQUEST_CODE);
-            }
+            loadDataFromServer();
         }
         else{
             loadDataFromServer();
