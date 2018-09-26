@@ -17,17 +17,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * Initializing all UI components
-     */
     private void ui() {
         initViews();
     }
 
-
-    /**
-     * Initializing all views
-     */
     private void initViews() {
         addOrReplaceFragment(R.id.fragment_main, new MainFragment(), MainFragment.class.getName());
     }

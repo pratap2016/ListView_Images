@@ -41,11 +41,6 @@ import retrofit2.Response;
 
 public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
-
-    /**
-     * Phone state permission
-     */
-    public static String PERMISSIONS[] = new String[]{Manifest.permission.READ_PHONE_STATE};
     View mView;
     ImageAdapter imageAdapter = null;
 
@@ -82,18 +77,12 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         return mView;
     }
 
-    /**
-     * All Ui related operation of Fragment
-     */
     private void ui() {
         initViews();
         setAdapterToView();
         getPermissions();
     }
 
-    /**
-     * Initializing all views and operations
-     */
     private void initViews() {
 
         // Setting Toolbar to action bar
@@ -108,22 +97,6 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 android.R.color.holo_green_dark,
                 android.R.color.holo_orange_dark,
                 android.R.color.holo_blue_dark);
-
-        /**
-         * Showing Swipe Refresh animation on activity create
-         * As animation won't start on onCreate, post runnable is used
-         *//*
-        mSwipeRefreshLayout.post(new Runnable() {
-
-            @Override
-            public void run() {
-
-                mSwipeRefreshLayout.setRefreshing(true);
-
-                // Fetching data from server
-                loadDataFromServer();
-            }
-        });*/
     }
 
     /**
@@ -170,7 +143,6 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         if(AppUtil.isInternetConnected(getActivity())) { // Checking internet connection
 
-            // Creating progress dialog to show for async call
             final ProgressDialog dialog = new ProgressDialog(getActivity());
             dialog.setCancelable(false);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -247,8 +219,6 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
      * Reloading the recycler view after api call.
      */
     private void loadRecyclerViewData() {
-
-        // Showing refresh animation before making http call
         mSwipeRefreshLayout.setRefreshing(true);
         getPermissions();
     }

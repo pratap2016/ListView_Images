@@ -45,10 +45,6 @@ public class MyApplication extends Application {
         initClasses();
     }
 
-    /**
-     * Creating instance of the class
-     * @return
-     */
     public static synchronized MyApplication getInstance() {
         return mInstance;
     }
@@ -106,8 +102,8 @@ public class MyApplication extends Application {
     private ImageLoaderConfiguration getImageLoadingConfiguration(){
         return new ImageLoaderConfiguration.Builder(mInstance)
                 .defaultDisplayImageOptions(MyApplication.getInstance().getDisplayOption())
-                .memoryCacheExtraOptions(AppUtil.getScreenResolutionWidth(mInstance),
-                        AppUtil.getScreenResolutionHeight(mInstance)) // default = device screen dimensions
+                .memoryCacheExtraOptions(AppUtil.getScreenResolutionWidth(mInstance)/2,
+                        AppUtil.getScreenResolutionHeight(mInstance)/2) // default = device screen dimensions
                 .diskCacheExtraOptions(AppUtil.getScreenResolutionWidth(mInstance),
                         AppUtil.getScreenResolutionHeight(mInstance), null)
                 .threadPoolSize(10) // default

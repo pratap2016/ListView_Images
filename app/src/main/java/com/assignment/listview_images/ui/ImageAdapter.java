@@ -29,9 +29,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     private List<RowModel> mItems;
     private PostItemListener mItemListener;
 
-    /**
-     * View holder to hold all views
-     */
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         // Butter Knife Dependency Injection
@@ -45,8 +42,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
         ViewHolder(View itemView, PostItemListener postItemListener) {
             super(itemView);
-
-            // Butter Knife initialization for dependency injection
             ButterKnife.bind(this, itemView);
 
             this.mItemListener = postItemListener;
@@ -108,7 +103,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             public void onLoadingFailed(String imageUri, View view,
                                         FailReason failReason) {
                 // This will handle 404 and it will catch null exception
-                // do here what you want to do
                 holder.iv_Pics.setImageResource(R.drawable.ic_failed);
             }
 
@@ -138,10 +132,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         return mItems.size();
     }
 
-    /**
-     * Method to update Adapter
-     * @param items
-     */
     public void updateAnswers(List<RowModel> items) {
         mItems = items;
         notifyDataSetChanged();

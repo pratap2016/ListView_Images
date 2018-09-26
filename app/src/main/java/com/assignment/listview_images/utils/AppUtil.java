@@ -56,11 +56,6 @@ public class AppUtil {
             return false;
     }
 
-    /**
-     * Getting device screen resolution for Image caching
-     * @param context
-     * @return
-     */
     public static int getScreenResolutionWidth(Context context)
     {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -72,11 +67,6 @@ public class AppUtil {
         return width ;
     }
 
-    /**
-     * Getting device screen resolution for Image caching
-     * @param context
-     * @return
-     */
     public static int getScreenResolutionHeight(Context context)
     {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
